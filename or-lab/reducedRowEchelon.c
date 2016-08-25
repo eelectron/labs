@@ -35,24 +35,26 @@ bool exchangeRow(double **m,int row, int col, int r){
 	This function reduces other rows using r'th row.
 */
 void reduce(double **m, int row, int col, int p, int q){
-
-	
 	//pivot
 	double pivot = m[p][q];
-	
+
 	//divide r'th row by m[r][r]	
 	for(int j=0; j<col; j++)
 		m[p][j] = m[p][j]/pivot;
 	
 	
 	for(int i=0; i<row; i++){
-		//reduce other rows leaving given row r.
+		//reduce other rows leaving given row p.
 			if(i != p){
+				float term = m[i][q];		//coefficient of var which must be made to zero
 				for(int j=0; j<col; j++){
-					m[i][j] = m[i][j] - m[p][j]*m[i][q];		
+					m[i][j] = m[i][j] - m[p][j]*term;
 				}
 			}	
 	}
+
+	//print 
+	printMatrix(m, row, col);
 }
 
 
@@ -77,23 +79,26 @@ void rref(double **m, int row, int col){
 			}	
 		}
 		
-		if(lead < col)					//skip the row with all zero
+		if(lead < row)					//reduce using row which has atleast 1 non-zero item
 			reduce(m, row, col, i, lead);
 	}
 }
 
 void main(){
-	double **m;
-	int row,col;
-	printf("Enter dimension of matrix:");
-	scanf("%i %i", &row, &col);
+	double **mx;
+	int m,n;
+	printf("Enter m = ");
+	scanf("%i", &m);
+	
+	printf("Enter n = ");
+	scanf("%i", &n);
 	
 	//get space
-	m = malloc(row*sizeof(double *));
-	for(int i=0; i<row; i++)
-		m[i] = malloc(col*sizeof(double));
+	mx = malloc(m*sizeof(double *));
+	for(int i=0; i<m; i++)
+		mx[i] = malloc(n*sizeof(double));
 		
-	scanMatrix(m, row, col);
-	rref(m, row, col);
-	printMatrix(m ,row, col);
+	scanMatrix(mx, m, n);
+	rref(mx, m, n);
+	printMatrix(mx , m, n);
 }
