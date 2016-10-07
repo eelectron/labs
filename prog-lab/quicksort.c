@@ -35,7 +35,6 @@ int partition(int a[], int lb, int ub){
 
 
 void quicksort(int a[], int lb, int ub){
-
 	if(lb >= ub)
 		return;
 	

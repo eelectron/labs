@@ -6,7 +6,7 @@
         *
 */
 
-void revPyramid(int height){
+void reversePyramid(int height){
 	for(int r=0; r<height; r++){
 		//space
 		for(int c=1; c<=r; c++)
