@@ -31,8 +31,13 @@ void main(){
 void main(){
 
 	int V,s;
+	FILE *fp = fopen("graph2.txt","r");
+	if(fp == NULL){
+		printf("Not able to read file.");
+		return ;
+	}
 	printf("Enter no. of vertices and src vertex:");
-	scanf("%i %i", &V, &s);
+	fscanf(fp,"%i %i", &V, &s);
 	
 	initialize(V,s);
 	
@@ -40,17 +45,13 @@ void main(){
 	initializeMinPQ(V+1);
 	
 	//build graph
-	int u,v,weight,e;
-	printf("No of edges:");
-	scanf("%i",&e);
-	while(e != 0){
-		scanf("%i %i %i", &u, &v, &weight); 
+	int u,v,weight;
+	while(fscanf(fp,"%i %i %i",&u,&v,&weight) != EOF){
 		addEdge(u,v,weight);
-		e--;
 	}
 	
 	printGraph();
 
 	Dijkstra(s);
-	pathTo(1);	
+	pathTo(2);	
 }

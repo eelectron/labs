@@ -21,43 +21,7 @@ de *edgeTo;	//edgeTo[v] is last edge on shortest path from s to v.
 
 
 /*
-Adds edge to digraph
-*/
-void addEdge(int u, int v, int weight){
-	
-	//create edge
-	de  *edge =  (de *)malloc(sizeof(de));
-	edge->u = u;
-	edge->v = v;
-	edge->weight = weight;
-
-	//find node which has nextEdge == NULL
-	if ( graph[u] == NULL){
-		graph[u] = edge;
-		return;
-	}
-
-	de *cursor = graph[u];	//points to first edge
-	while( cursor->nextEdge != NULL ){
-		cursor = cursor->nextEdge;
-	}
-
-	cursor->nextEdge = edge;	//attach edge at end
-}
-
-
-
-/*
-Returns adjacent edges to the given vertex.
-*/
-de * adj(int u){
-	return graph[u];
-}
-
-
-/*
 Initialize distTo[s] = 0 and other with INFINITY.
-
 In our program INFINITY = INT_MAX.
 */
 
@@ -69,11 +33,38 @@ void initialize(int n, int s){
 	distTo = (int *)malloc(V*sizeof(int));
 	edgeTo = (de *)malloc(V*sizeof(de));
 
-	for(int i=0; i<N; i++)
+	for(int i=0; i<V; i++)
 		distTo[i] = INT_MAX;
 	distTo[s] = 0;
 	printf("init");		
 }
+
+
+/*
+Adds edge to digraph
+*/
+void addEdge(int u, int v, int weight){
+	
+	//create edge
+	de  *edge =  (de *)malloc(sizeof(de));
+	edge->u = u;
+	edge->v = v;
+	edge->weight = weight;
+
+	de *temp = graph[u];
+	graph[u] = edge;
+	edge->nextEdge = temp;
+}
+
+
+
+/*
+Returns adjacent edges to the given vertex.
+*/
+de * adj(int u){
+	return graph[u];
+}
+
 
 
 /*
@@ -90,8 +81,6 @@ void relax(de *e){
 		edgeTo[v].weight = e->weight;
 		insert(v);
 	}
-
-	printf("relaxed");
 }
 
 
@@ -107,7 +96,7 @@ void Dijkstra(int s){
 		while(e != NULL){
 			relax(e);
 			e = e->nextEdge;
-			printf("%lf ",e->weight);   ///////////////////
+			printf("relaxed %i->%i, %lf \n",e->u,e->v,e->weight);   
 		}
 	}
 }
@@ -125,7 +114,6 @@ void pathTo(int v){
 		tempEdge = edgeTo[v];
 		path[top++] = tempEdge;
 		v = tempEdge.u;		//previous vertex
-		
 	}
 
 	//print path
@@ -146,5 +134,6 @@ void printGraph(){
 			printf("%i->%i,%lf  ", cursor->u, cursor->v, cursor->weight);
 			cursor = cursor->nextEdge;
 		}
+		printf("\n");
 	}
 }
