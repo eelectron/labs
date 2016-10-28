@@ -89,12 +89,10 @@ void Dijkstra(int s){
 	insert(s);
 	while(!isEmpty()){
 		int u = delMin();
-		printf("min %i\n",u);
 	
 		//perform relax operation on each edge adjacent to vertex u
 		de *e = adj(u);
 		while(e != NULL){
-			printf("relaxed %i->%i, %lf \n",e->u,e->v,e->weight);   
 			relax(e);
 			e = e->nextEdge;
 		}
@@ -105,18 +103,26 @@ void Dijkstra(int s){
 /*
 Prints shortest path from src to given vertex v.
 */
-void pathTo(int v){
+void pathTo(int dtn){
+	int v = dtn;
 	int top=0;
 	de path[V-1];	
 	de tempEdge ;
 	//trace path from destination vertex v to source vertex 0.
 	while(v != src){
 		tempEdge = edgeTo[v];
+
+		if(tempEdge.u ==0 && tempEdge.v == 0){
+			printf("Vertex %i, is not reachable from src %i.\n", v, src);
+			return;
+		}
+
 		path[top++] = tempEdge;
 		v = tempEdge.u;		//previous vertex
 	}
 
 	//print path
+	printf("Shortest path from %i to %i is:\n", src, dtn);
 	for(int i=--top; i>=0; i--)
 		printf("%i -> %i  ",path[i].u, path[i].v );
 	printf("\n");
@@ -124,8 +130,12 @@ void pathTo(int v){
 
 
 
-
+/*
+Prints graph as adjacency list.
+*/
 void printGraph(){
+	printf("\n");
+	printf("Graph: \n");
 	for(int i=0; i<V; i++){
 		printf("%i  ",i);
 		de *cursor = graph[i];
@@ -135,4 +145,27 @@ void printGraph(){
 		}
 		printf("\n");
 	}
+}
+
+/*
+	START
+This function setup Graph and Minimum Priority Queue.
+*/
+void init(char *graph){
+	FILE *file = fopen(graph,"r");
+	int V,src,dtn;
+        fscanf(file,"%i %i %i", &V, &src, &dtn); 
+            
+        initialize(V,src);	//init graph
+        initializeMinPQ(V+1);   //init min pq
+            
+        //build graph
+        int u,v,weight;
+        while(fscanf(file, "%i %i %i", &u, &v, &weight) != EOF){
+                addEdge(u, v, weight);
+        }   
+            
+        printGraph();
+        Dijkstra(src);
+        pathTo(dtn);
 }

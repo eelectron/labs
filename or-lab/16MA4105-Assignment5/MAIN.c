@@ -5,7 +5,7 @@
 #define INF 100000000
 
 #include "Dijkstra.c"
-/* Floyd warshall's all pair shortest path.
+/* Unit testing Floyd warshall's all pair shortest path.
 void main(){
 	double **graph;
 	int m,n;
@@ -28,30 +28,14 @@ void main(){
 */
 
 //Unit test Dijkstra
-void main(){
-
-	int V,s;
-	FILE *fp = fopen("graph.txt","r");
-	if(fp == NULL){
-		printf("Not able to read file.");
+void main(int argc, char *argv[]){
+	if(argc != 2){
+		printf("Please run your program as : ./a.out graph.txt \n"
+			", where in graph.txt's first line gives total no. vertex in graph,\n"
+			 " second line gives src vertex , \n"
+			" destination vertex and rest of lines give edges with their weights.\n");
 		return ;
 	}
-	printf("Enter no. of vertices and src vertex:");
-	fscanf(fp,"%i %i", &V, &s);
-	
-	initialize(V,s);
-	
-	//initialize Min PQ
-	initializeMinPQ(V+1);
-	
-	//build graph
-	int u,v,weight;
-	while(fscanf(fp,"%i %i %i",&u,&v,&weight) != EOF){
-		addEdge(u,v,weight);
-	}
-	
-	printGraph();
 
-	Dijkstra(s);
-	pathTo(1);	
+	init(argv[1]);	//pass graph.txt file t init	
 }

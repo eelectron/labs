@@ -52,7 +52,9 @@ void sink(int p){
 			t = pq[c];
 			pq[c] = pq[p];
 			pq[p] = t;
-		}				
+		}
+		p = c;
+		c = 2*p;		
 	}
 }
 
@@ -69,7 +71,6 @@ int delMin(){
 	int t = pq[1];
 	pq[1] = pq[i];
 	pq[i] = t;
-	printf("min %i  i=%i\n",min,i);
 	sink(1);
 	return min;	
 }
