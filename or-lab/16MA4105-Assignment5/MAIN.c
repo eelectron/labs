@@ -31,7 +31,7 @@ void main(){
 void main(){
 
 	int V,s;
-	FILE *fp = fopen("graph2.txt","r");
+	FILE *fp = fopen("graph.txt","r");
 	if(fp == NULL){
 		printf("Not able to read file.");
 		return ;
@@ -53,5 +53,5 @@ void main(){
 	printGraph();
 
 	Dijkstra(s);
-	pathTo(2);	
+	pathTo(1);	
 }

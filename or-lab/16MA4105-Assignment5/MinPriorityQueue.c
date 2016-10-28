@@ -11,8 +11,8 @@ int i = 1;	//new item will be inserted at i
 		//for simplifying calc of parent and child position.
 
 void initializeMinPQ(int n){
-	N = n+1;
-	pq = (int *)malloc( (N)*sizeof(int) );
+	N = n;
+	pq = (int *)malloc( N*sizeof(int) );
 }
 
 
@@ -44,7 +44,7 @@ void sink(int p){
 
 	while(c < i){
 		//select smaller child 
-		if(pq[c+1] < pq[c] && c+1 < i)
+		if(c+1 < i && pq[c+1] < pq[c])
 			c = c+1;
 
 		//swap if min heap property violates
@@ -63,18 +63,19 @@ int delMin(){
 	}
 
 	int min = pq[1];	//min will always at index 1
-	i--;
+	i--;			//location of last item
 
 	//swap min item with last item
 	int t = pq[1];
 	pq[1] = pq[i];
 	pq[i] = t;
+	printf("min %i  i=%i\n",min,i);
 	sink(1);
 	return min;	
 }
 
 void insert(int n){
-	if(i == N+1){
+	if(i == N){
 		printf("PQ is full.");
 		return;
 	}
@@ -82,6 +83,5 @@ void insert(int n){
 	pq[i] = n;
 	swim(i);	//swim to its correct position in heap
 	i++;
-	printf("inserted %i\n", n);	
 }
 

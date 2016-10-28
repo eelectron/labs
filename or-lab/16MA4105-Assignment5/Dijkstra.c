@@ -14,6 +14,7 @@ struct directedEdge{
 typedef struct directedEdge de;
 
 int V; 		//total no. of vertex
+int src;
 de * *graph;	//DIRECTED GRAPH shown as adjacency list
 
 int *distTo;	//distTo[v] is shortest path from s to v.
@@ -27,7 +28,8 @@ In our program INFINITY = INT_MAX.
 
 void initialize(int n, int s){
 	V = n;
-	
+	src = s;
+
 	//adjacency list
 	graph = (de * *)malloc(V*sizeof(de *));
 	distTo = (int *)malloc(V*sizeof(int));
@@ -36,7 +38,6 @@ void initialize(int n, int s){
 	for(int i=0; i<V; i++)
 		distTo[i] = INT_MAX;
 	distTo[s] = 0;
-	printf("init");		
 }
 
 
@@ -85,7 +86,6 @@ void relax(de *e){
 
 
 void Dijkstra(int s){
-	
 	insert(s);
 	while(!isEmpty()){
 		int u = delMin();
@@ -94,32 +94,31 @@ void Dijkstra(int s){
 		//perform relax operation on each edge adjacent to vertex u
 		de *e = adj(u);
 		while(e != NULL){
+			printf("relaxed %i->%i, %lf \n",e->u,e->v,e->weight);   
 			relax(e);
 			e = e->nextEdge;
-			printf("relaxed %i->%i, %lf \n",e->u,e->v,e->weight);   
 		}
 	}
 }
 
+
 /*
 Prints shortest path from src to given vertex v.
 */
-
 void pathTo(int v){
 	int top=0;
 	de path[V-1];	
 	de tempEdge ;
 	//trace path from destination vertex v to source vertex 0.
-	while(v != 0){
+	while(v != src){
 		tempEdge = edgeTo[v];
 		path[top++] = tempEdge;
 		v = tempEdge.u;		//previous vertex
 	}
 
 	//print path
-	for(int i=top--; i>=0; i--)
+	for(int i=--top; i>=0; i--)
 		printf("%i -> %i  ",path[i].u, path[i].v );
-
 	printf("\n");
 }
 
