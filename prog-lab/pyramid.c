@@ -1,6 +1,6 @@
 /*
 Prints the below pattern:
-	   *
+       *
       * * 
      * * * 
     * * * *
@@ -23,12 +23,6 @@ void pyramid(int row){
 			printf("* ");	
 		}
 
-
-		//print space
-		for(int j=1; j<=row-i; j++ )
-			printf("  ");
-
-		
 		//print new line after each row
 		printf("\n");
 	}

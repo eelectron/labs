@@ -1,10 +1,10 @@
 #include<stdio.h>
-#include "diamond.c"
+#include "pyramid.c"
 
 void main(){
 	int h;
 	scanf("%i",&h);
-	diamond(h);
+	pyramid(h);
 }
 
 /*
