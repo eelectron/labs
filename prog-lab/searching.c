@@ -9,9 +9,8 @@ int binarySearch(int a[], int lo, int hi, int x){
 		mid = (lo+hi)/2;
 		if(a[mid] == x)
 			return mid;
-		else if(x < a[mid]){
+		else if(x < a[mid])
 			hi = mid-1;
-		}
 		else
 			lo = mid+1;
 	}

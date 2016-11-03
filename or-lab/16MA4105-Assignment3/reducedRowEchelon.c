@@ -1,3 +1,15 @@
+/*
+Input: 	 x1  + 2x2  +  x3   = 4
+		 x1  + 3x2  + 2x3   = 6
+		2x1  + 4x2  + 3x3 	= 9
+		
+Reduced row form:
+		1	0	0	=	1
+		0	1	0	=	1
+		0	0	1	=	1
+		
+Output: x1=1, x2=1, x3=1
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
@@ -87,11 +99,8 @@ void rref(double **m, int row, int col){
 void main(){
 	double **mx;
 	int m,n;
-	printf("Enter m = ");
-	scanf("%i", &m);
-	
-	printf("Enter n = ");
-	scanf("%i", &n);
+	printf("Enter m and n ");
+	scanf("%i %i", &m, &n);
 	
 	//get space
 	mx = malloc(m*sizeof(double *));

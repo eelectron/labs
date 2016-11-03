@@ -1,9 +1,9 @@
 /* This program gives the solution of a System of Consistent Linear Equation.
 For Ex:
-Input: 	x1 + 2x2 + x3   = 4
-	x1 + 3x2  + 2x3 = 6
-	2x + 4y + 3x3 = 9
-Output: x=1, y=1, z=1
+Input: 	 x1  + 2x2  +  x3   = 4
+		 x1  + 3x2  + 2x3   = 6
+		2x1  + 4x2  + 3x3 	= 9
+Output: x1=1, x2=1, x3=1
 */
 
 #include "reducedRowEchelon.c"
