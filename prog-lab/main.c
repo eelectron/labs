@@ -1,10 +1,11 @@
 #include<stdio.h>
 #include "pyramid.c"
+#include "reversePyramid.c"
 
 void main(){
 	int h;
 	scanf("%i",&h);
-	pyramid(h);
+	reversePyramid(h);
 }
 
 /*
