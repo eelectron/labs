@@ -72,7 +72,7 @@ void reduce(double **m, int row, int col, int p, int q){
 
 /*
   input: A m x n matrix
-  output: A m x n matrix in row reduced echelon form.
+  output: A m x n matrix in reduced row echelon form.
 */
 void rref(double **m, int row, int col){
 	double pivot;
