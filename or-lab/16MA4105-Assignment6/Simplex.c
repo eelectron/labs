@@ -28,14 +28,16 @@ For ex:
 #include<stdio.h>
 #include<stdbool.h>
 #include<limits.h>
+#include<math.h>
 #include "in-out.c"
 /*
 Check if current table is optimal .
 */
 bool isOptimal(double **m, int p, int q){
+	float small = -0.00001;
 	//check if optimal solution reached
 	for(int j=0; j<q-1; j++){
-		if(m[0][j] < 0){
+		if(m[0][j] < small){
 			return false;
 		}
 	}
@@ -109,6 +111,8 @@ void reduce(double **m, int row, int col, int p, int q){
 				float term = m[i][q];		//coefficient of var which must be made to zero
 				for(int j=0; j<col; j++){
 					m[i][j] = m[i][j] - m[p][j]*term;
+					if(m[i][j] == 0.0)
+						m[i][j] = 0.0;		//save -0.0 as 0.0
 				}
 			}	
 	}
