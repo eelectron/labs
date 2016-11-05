@@ -2,28 +2,40 @@
 This program finds the optimum value of a LPP
 given in matrix form.
 For ex:
-	Max z = 3x1 + 5x2
+	Max z = 3x0 + 5x1
 	 st
-	x1			<= 4
-	2x2			<= 12
-	3x1	+ 2x2	<= 18
+	x0			<= 4
+	2x1			<= 12
+	3x0	+ 2x1	<= 18
 	
-	soln - x1 = 2 , x2 = 6
+	soln - x0 = 2 , x1 = 6
 	
 	
 	Convert constraint to equality
-	z - 3x1 - 5x2					= 0
-		x1        + x3 		 		= 4
-		      2x2      +  x4  		= 12
-		3x1 + 2x2            + x5 	= 18
+	z - 3x0 - 5x1					= 0
+		x0        + x2 		 		= 4
+		      2x1      +  x3  		= 12
+		3x0 + 2x1            + x4 	= 18
+		
+	The initial table corresponding to above LPP,
+	which will be used to start simplex process is as below
+	-3	-5	0	0	0	0
+	1	0	1	0	0	4
+	0	2	0	1	0	12
+	3	2	0	0	1	18
 */
 
 #include<stdio.h>
-
-bool isOptimal(float **m, int p, int q){
+#include<stdbool.h>
+#include<limits.h>
+#include "in-out.c"
+/*
+Check if current table is optimal .
+*/
+bool isOptimal(double **m, int p, int q){
 	//check if optimal solution reached
-	for(int i=0; i<q; i++){
-		if(m[0][i] < 0){
+	for(int j=0; j<q-1; j++){
+		if(m[0][j] < 0){
 			return false;
 		}
 	}
@@ -34,11 +46,11 @@ bool isOptimal(float **m, int p, int q){
 /*
 Returns index of entering var.
 */
-int findEnteringVar(float **m, int p, int q){
-	int i = 0;
-	float minCoe = m[0][0];
+int findEnteringVar(double **m, int p, int q){
+	int i = 0;		//index of largest absolute coefficient of var
+	float minCoe = m[0][0];		//intialize min coe
 
-	for(int j=0; j<q; j++){
+	for(int j=0; j<q-1; j++){
 		if(m[0][j] < minCoe){
 			minCoe = m[0][j];
 			i = j;
@@ -49,30 +61,102 @@ int findEnteringVar(float **m, int p, int q){
 
 
 /*
+Returns index of leaving var using minimum ratio test.
+Returns -1 , if no leaving var is present.
+*/
+int findLeavingVar(double **m, int p, int q, int ev){
+	float min = INT_MAX;		//minimum ratio among all
+	int index = -1;				//
+	//iterate vertically starting with index 1
+	for(int i=1; i<p; i++){
+		//item must be  > 0 
+		if(m[i][ev] > 0){
+			//get ratio
+			float ratio = m[i][q-1]/m[i][ev];
+			if(ratio < min){
+				min = ratio;
+				index = i;
+			}
+		}
+	}
+	return index;
+}
+
+/*
+Save entering var in basic var array.
+*/
+int saveEnteringVar(int bv[], int p, int ev , int lv){
+	bv[lv] = ev;
+	return lv;
+}
+
+
+/*
+	This function reduces other rows using r'th row.
+*/
+void reduce(double **m, int row, int col, int p, int q){
+	//pivot
+	double pivot = m[p][q];
+
+	//divide r'th row by m[r][r]	
+	for(int j=0; j<col; j++)
+		m[p][j] = m[p][j]/pivot;
+	
+	
+	for(int i=0; i<row; i++){
+		//reduce other rows leaving given row p.
+			if(i != p){
+				float term = m[i][q];		//coefficient of var which must be made to zero
+				for(int j=0; j<col; j++){
+					m[i][j] = m[i][j] - m[p][j]*term;
+				}
+			}	
+	}
+}
+
+
+
+/*
 This function takes a LPP in matrix form with its dimension.
 */
 
-bool simplex(float **m, int p, int q){
-	int var[q];	//stores current position of basic var 
-			//-1 at var[i] denote i'th var is currently non-basic
-	
-	int nbv = q - (p-1);		//no. of non basic var
-	for(int i=0; i < nbv; i++)
-		var[i] = -1;
-	
+bool simplex(double **m, int p, int q){	
+	int nbv = (q-1) - (p-1);		//no. of non-basic var
+
+	//stores current basic var
+	int bv[p];
+
 	//initial basic var
-	for(int i = nbv; i<q; i++)
-		var[i] = i - nbv + 1;
+	for(int i = 1; i<p; i++)
+		bv[i] = (i-1) + nbv;
 
 	
 	int ev;		//index of entering var
-	int lv;		//index of leaving var
-	while(!isOptimal(float **m, int p, int q)){
+	int ilv;		//index of leaving var
+	while(!isOptimal(m, p, q)){
 		//find entering var
-		ev = findEnteringVar(float **m, int p, int q);
+		ev = findEnteringVar(m, p, q);
 
 		//find index of leaving var
-	}
+		ilv = findLeavingVar(m, p, q, ev);
 		
+		printf("\n ev = %i  ilv = %i \n", ev , ilv);
+		
+		//save ev in basic var array
+		saveEnteringVar(bv, p, ev, ilv);
+
+		//reduce using row
+		reduce(m, p, q, ilv, ev);
+		
+		//print table after each reduction
+		printMatrix(m, p, q);	
+	}	
 	
+	//values of final basic variables
+	for(int i=1; i<p; i++){
+		printf("x%i = %lf\n", bv[i], m[i][q-1]);
+	}
+	
+	//Z value
+	printf("Z = %lf\n",m[0][q-1]);
 }
