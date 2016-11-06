@@ -1,4 +1,5 @@
-#include "determinant.c"
+#include "../determinant.c"
+#include "../createMatrix.c"
 
 /*This returns a cofactor matrix of a given nxn matrix*/
 double ** cofactor(double **a, int n){
@@ -8,7 +9,7 @@ double ** cofactor(double **a, int n){
 
 	for(int i=0; i<n; i++)
 		for(int j=0; j<n; j++)
-			c[i][j] = power(-1,i+j)*determinant(getMinor(a, n-1, i, j), n-1);
+			c[i][j] = power(-1,i+j)*determinant(getMinor(a, n, i, j), n-1);
 	
 	//return the resultant cofactor matrix
 	return c;
@@ -55,13 +56,7 @@ void main(){
         int n;
         printf("Enter order of matrix:");
         scanf("%i",&n);
-
-        //get a memory block of size n
-        a = malloc(n*sizeof(double *));
-
-        //make space for matrix item
-        for(int i=0; i<n; i++)
-                a[i] = malloc(n*sizeof(double));
+		a = createMatrix(n, n);
 
         //user input
         scanMatrix(a, n, n);

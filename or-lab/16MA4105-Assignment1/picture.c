@@ -5,25 +5,21 @@
       1
 */
 #include<stdio.h>
-#include "countDigit.c"
+#include "../countDigit.c"
 
-void picture(int row){
-	int width = countDigit(row);
-	for(int i=0; i<row; i++){
+void picture(int rows){
+	int width = countDigit(rows);
+	for(int i=0; i<rows; i++){
 		//print space
 		for(int j=0; j<i; j++){
 			printf("%*c ", width, 32);
-		
 		}
 			
 		//print num
-		for(int j=1; j<=row-i; j++){
+		for(int j=1; j<=rows-i; j++){
 			printf("%*i ",width,j);
 		}
 			
-		
-			
-		//print newline
 		printf("\n");
 	}
 }

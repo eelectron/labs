@@ -7,11 +7,12 @@
 
 
 /* a[][](original) ----> m[][](minor) */
-double ** getMinor(double **a, int size,int row, int col){
+double ** getMinor(double **a, int order,int row, int col){
 	//create a empty matrix
-	double **m = malloc(size*sizeof(double *));
-	for(int i=0; i<size; i++){
-		m[i] = malloc(size*sizeof(double));
+	//order of minor is 1 less than order of given matrix
+	double **m = malloc((order-1)*sizeof(double *));
+	for(int i=0; i<order-1; i++){
+		m[i] = malloc((order-1)*sizeof(double));
 	}
 	
 	//Fill m[][] matrix with the minor of a[0][col]
@@ -20,8 +21,8 @@ double ** getMinor(double **a, int size,int row, int col){
 	int p=0,q=0;
 
 	//iterate over original matrix
-	for(int i=0; i<size+1; i++){
-		for(int j=0; j<size+1; j++){
+	for(int i=0; i<size; i++){
+		for(int j=0; j<size; j++){
 			if(i != row && j != col){		//get item whose row and col are diff from row 
 				m[p][q] = a[i][j];			//and col of a[0][col]
 				q++;	
@@ -63,7 +64,6 @@ double determinant(double **a, int n){
 		det += power(-1,col) * a[0][col] * determinant(minor, n-1);	
 		freeMinor(minor, n-1);					//free space occupied by minor
 	}
-	
 	return det;
 }
 
