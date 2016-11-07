@@ -1,9 +1,9 @@
 /* This program gives the solution of a System of Consistent Linear Equation.
 For Ex:
-Input: 	 x1  + 2x2  +  x3   = 4
-		 x1  + 3x2  + 2x3   = 6
-		2x1  + 4x2  + 3x3 	= 9
-Output: x1=1, x2=1, x3=1
+Input: 	 x0  + 2x1  +  x2   = 4
+		 x0  + 3x1  + 2x2   = 6
+		2x0  + 4x1  + 3x2 	= 9
+Output: x0=1, x1=1, x2=1
 */
 
 #include "reducedRowEchelon.c"
@@ -41,7 +41,6 @@ void main(){
 
 	//print solution
 	for(int i=0; i<m; i++){
-		printf("x%i = %.2f\n",i+1, sol[i][n-1]);
+		printf("x%i = %.2f\n", i, sol[i][n-1]);
 	}
-	
 }

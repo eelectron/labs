@@ -28,10 +28,10 @@ double ** getMinor(double **a, int order,int row, int col){
 				q++;	
 			}
 		}
+		q=0;	//reset q
 		//increase p only if q is greater than 0
 		if(q > 0)
 			p++;
-		q=0;	//reset q
 	}
 	
 	//return minor
@@ -60,32 +60,9 @@ double determinant(double **a, int n){
 	double det = 0;
 	//expand along first row to get determinant
 	for(int col=0; col<n;col++){
-		double **minor = getMinor(a, n-1, 0, col); 			//get minor of a[0][col] item
+		double **minor = getMinor(a, n, 0, col); 			//get minor of a[0][col] item
 		det += power(-1,col) * a[0][col] * determinant(minor, n-1);	
 		freeMinor(minor, n-1);					//free space occupied by minor
 	}
 	return det;
 }
-
-/*
-void main(){
-	double **a;
-	int n;
-	printf("Enter order of matrix:");
-	scanf("%i",&n);
-	
-	//get a memory block of size n
-	a = malloc(n*sizeof(double *));
-	
-	//make space for matrix item
-	for(int i=0; i<n; i++)
-		a[i] = malloc(n*sizeof(double));
-	
-	//user input
- 	scanMatrix(a, n, n);
-
-	//find determinant	
-	printf("%f \n",determinant(a, n));
-}
-
-*/

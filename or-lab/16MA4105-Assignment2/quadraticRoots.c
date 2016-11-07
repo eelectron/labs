@@ -19,7 +19,7 @@ void quadraticRoots(int a, int b, int c){
 	else{
 		printf("roots are imaginary\n");
 		ip = sqrt(-1*discriminant)/2*a;
-		printf(" %1$.2f + i%2$.2f,	%1$.2f + i%2$.2f\n", rp, ip);
+		printf(" %1$.2f + i%2$.2f,	%1$.2f - i%2$.2f\n", rp, ip);
 		
 	}	
 }

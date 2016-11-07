@@ -10,7 +10,6 @@ void eachColMinMax(double **m, int r, int c){
 	struct item mins[c];	//min of each col
 	struct item maxs[c];	//max of each col
 	
-
 	for(int i=0; i<c; i++){
 		//initial values for each row
 		int min = m[0][i], p=0, q=i;
@@ -27,10 +26,8 @@ void eachColMinMax(double **m, int r, int c){
 				max = m[j][i];		
 				s = j;
 				t = i;
-			}	
-				
+			}		
 		}
-
 		//save min 
 		mins[i].data = min;
 		mins[i].i = p;

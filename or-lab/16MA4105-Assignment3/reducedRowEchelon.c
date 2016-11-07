@@ -34,10 +34,10 @@ bool exchangeRow(double **m,int row, int col, int r){
 		return false;
 	
 	//exchange row
-	for(int i=0; i<col; i++){
-		temp = m[r][i];
-		m[r][i] = m[newRow][i];
-		m[newRow][i] = temp;
+	for(int j=0; j<col; j++){
+		temp = m[r][j];
+		m[r][j] = m[newRow][j];
+		m[newRow][j] = temp;
 	}
 	
 	return true;		
@@ -64,8 +64,6 @@ void reduce(double **m, int row, int col, int p, int q){
 				}
 			}	
 	}
-
-	//print 
 	printMatrix(m, row, col);
 }
 
@@ -80,6 +78,8 @@ void rref(double **m, int row, int col){
 	for(int i=0; i<row; i++){
 		lead = i;					//lead will ALWAYS be >= i
 		pivot = m[i][lead];
+		
+		//find a non-zero pivot in row
 		while(pivot == 0 && lead < col){
 			//perform exchange
 			if(exchangeRow(m, row, col, i)){
