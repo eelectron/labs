@@ -8,8 +8,6 @@ Output: x0=1, x1=1, x2=1
 
 #include "reducedRowEchelon.c"
 
-
-
 /*This function takes a augmented matrix and its row  and col.
 output : matrix in its rref form.*/
 double ** solOfConsystem(double **m, int r, int c){	

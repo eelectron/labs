@@ -49,7 +49,7 @@ bool isOptimal(double **m, int p, int q){
 Returns index of entering var.
 */
 int findEnteringVar(double **m, int p, int q){
-	int i = 0;		//index of largest absolute coefficient of var
+	int i = 0;		//index of largest absolute vlue of coefficient
 	float minCoe = m[0][0];		//intialize min coe
 
 	for(int j=0; j<q-1; j++){
@@ -92,7 +92,6 @@ int saveEnteringVar(int bv[], int p, int ev , int lv){
 	return lv;
 }
 
-
 /*
 	This function reduces other rows using r'th row.
 */
@@ -104,21 +103,16 @@ void reduce(double **m, int row, int col, int p, int q){
 	for(int j=0; j<col; j++)
 		m[p][j] = m[p][j]/pivot;
 	
-	
 	for(int i=0; i<row; i++){
 		//reduce other rows leaving given row p.
 			if(i != p){
 				float term = m[i][q];		//coefficient of var which must be made to zero
 				for(int j=0; j<col; j++){
 					m[i][j] = m[i][j] - m[p][j]*term;
-					if(m[i][j] == 0.0)
-						m[i][j] = 0.0;		//save -0.0 as 0.0
 				}
 			}	
 	}
 }
-
-
 
 /*
 This function takes a LPP in matrix form with its dimension.
@@ -132,7 +126,7 @@ bool simplex(double **m, int p, int q){
 
 	//initial basic var
 	for(int i = 1; i<p; i++)
-		bv[i] = (i-1) + nbv;
+		bv[i] = nbv + (i-1);
 
 	
 	int ev;		//index of entering var

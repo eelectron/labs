@@ -4,27 +4,23 @@
 #include<stdlib.h>
 #include "power.c"
 #include "in-out.c"
-
+#include "createMatrix.c"
 
 /* a[][](original) ----> m[][](minor) */
-double ** getMinor(double **a, int order,int row, int col){
+double ** getMinor(double **om, int order,int row, int col){
 	//create a empty matrix
 	//order of minor is 1 less than order of given matrix
-	double **m = malloc((order-1)*sizeof(double *));
-	for(int i=0; i<order-1; i++){
-		m[i] = malloc((order-1)*sizeof(double));
-	}
+	double **m = createMatrix(order-1, order-1);
 	
-	//Fill m[][] matrix with the minor of a[0][col]
-	
+	//Fill m[][] matrix with the minor of om[0][col]
 	//p,q keeps track of position in m[][]
 	int p=0,q=0;
 
 	//iterate over original matrix
-	for(int i=0; i<size; i++){
-		for(int j=0; j<size; j++){
+	for(int i=0; i<order; i++){
+		for(int j=0; j<order; j++){
 			if(i != row && j != col){		//get item whose row and col are diff from row 
-				m[p][q] = a[i][j];			//and col of a[0][col]
+				m[p][q] = om[i][j];			//and col of om[0][col]
 				q++;	
 			}
 		}
@@ -33,9 +29,7 @@ double ** getMinor(double **a, int order,int row, int col){
 		if(q > 0)
 			p++;
 	}
-	
-	//return minor
-	return m;
+	return m;		//return minor
 }
 
 void freeMinor(double **m, int row){

@@ -20,7 +20,6 @@ void main(){
 		graph[i] = malloc(n*sizeof(double));
 		
 	scanMatrix(graph, m, n);
-
 	floyd(graph, m);
 }
 

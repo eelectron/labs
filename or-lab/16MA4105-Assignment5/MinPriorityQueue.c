@@ -3,8 +3,7 @@
 This program creates a min heap of given numbers.
 */
 
-
-int *pq;	//array of vertices
+int *pq;	//points to array of vertices
 int N ;
 int i = 1;	//new item will be inserted at i
 		//first item will be inserted at index 1 not at 0
@@ -15,14 +14,12 @@ void initializeMinPQ(int n){
 	pq = (int *)malloc( N*sizeof(int) );
 }
 
-
 /*
 Returns true if priority queue is empty.
 */
 bool isEmpty(){
 	return i == 1;
 }
-
 
 void swim(int c){
 	int p = c/2;
@@ -37,11 +34,9 @@ void swim(int c){
 	}
 }
 
-
 void sink(int p){
 	int c = 2*p;
 	int t;
-
 	while(c < i){
 		//select smaller child 
 		if(c+1 < i && pq[c+1] < pq[c])
@@ -80,9 +75,7 @@ void insert(int n){
 		printf("PQ is full.");
 		return;
 	}
-
 	pq[i] = n;
 	swim(i);	//swim to its correct position in heap
 	i++;
 }
-

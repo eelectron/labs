@@ -1,5 +1,5 @@
 /*
-This program computes the shortest path between all
+This program computes the length of shortest path between all
 pairs of vertices.
 */
 
@@ -11,7 +11,7 @@ void floyd(double** graph, int v){
 		for(int j=0; j<v; j++)
 			sd[i][j] = graph[i][j];  
 
-	for(int k=0; k<v; k++)
+	for(int k=0; k<v; k++)		//here k can be intermediate node of any two nodes say i and j
 		for(int i=0; i<v; i++)
 			for(int j=0; j<v; j++ ){
 				dist = sd[i][k] + sd[k][j];		//dist bet. i,j with k as intermediate vertex
@@ -24,6 +24,5 @@ void floyd(double** graph, int v){
 			printf("%.2lf ",sd[i][j]);
 		} 
 		printf("\n");
-	} 
-		
+	} 		
 }

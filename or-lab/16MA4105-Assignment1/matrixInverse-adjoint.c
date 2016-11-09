@@ -3,9 +3,7 @@
 
 /*This returns a cofactor matrix of a given nxn matrix*/
 double ** cofactor(double **a, int n){
-	double **c = malloc(n*sizeof(double *));
-	for(int i=0; i<n; i++)
-		c[i] = malloc(n*sizeof(double));
+	double **c = createMatrix(n ,n);
 
 	for(int i=0; i<n; i++)
 		for(int j=0; j<n; j++)
